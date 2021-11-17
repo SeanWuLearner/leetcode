@@ -1,5 +1,9 @@
 #include <iostream>
+#include <vector>
 #include <gtest/gtest.h>
+
+using namespace std;
+
 #include "question_placeholder.h"
 
 int main(int argc, char **argv) {
