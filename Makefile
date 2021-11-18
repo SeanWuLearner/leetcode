@@ -5,7 +5,7 @@ SLAVE_TAG = latest
 SLAVE_WORK_DIR = /leetcode
 BUILT_EXE = ${SLAVE_WORK_DIR}/build/main.out
 BUILD_CMD = g++ ${SLAVE_WORK_DIR}/src/main.cpp -o ${BUILT_EXE}  \
-		-std=c++17 -lgtest -lpthread
+		-std=c++17 -lgtest -lpthread -lgmock
 DOCKER_BUILDER_MOUNT="$(PWD):/leetcode"
 DOCKER_RUN= docker run --rm=true --privileged --init \
 	-v $(DOCKER_BUILDER_MOUNT) \
