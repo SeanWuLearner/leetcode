@@ -65,14 +65,14 @@ public:
     }
 };
 
-class LRUCache {
+class LRUCache_My {
 private:
     LRUQueue q;
     unordered_map<int, pair<int, DListNode*>> dict;
     int capacity;
 
 public:
-    LRUCache(int capacity) {
+    LRUCache_My(int capacity) {
         this->capacity = capacity;
     }
 
@@ -102,6 +102,52 @@ public:
             dict.erase(node->val);
             delete node;
         }
+    }
+};
+
+/* clear and precise ans from discussion */
+#include <list>
+using LI = list<int>; //key
+using MII = unordered_map<int, int>; //map key to value
+using MILI = unordered_map<int, LI::iterator>; // map key to iter
+
+class LRUCache {
+private:
+    LI lru;
+    MII val_dict;
+    MILI iter_dict;
+    int cap;
+
+public:
+    LRUCache(int capacity) {
+        cap = capacity;
+    }
+
+    int get(int key) {
+        if(val_dict.count(key)==0)
+            return -1;
+        updateLRU(key);
+        return val_dict[key];
+    }
+
+    void put(int key, int value) {
+        if(lru.size() == cap && val_dict.count(key)==0)
+            evict();
+        updateLRU(key);
+        val_dict[key] = value;
+    }
+private:
+    void updateLRU(int key){
+        if(iter_dict.count(key)!= 0)
+            lru.erase(iter_dict[key]);
+        lru.push_front(key);
+        iter_dict[key] = lru.begin();
+    }
+    void evict(){
+        int key = lru.back();
+        iter_dict.erase(key);
+        val_dict.erase(key);
+        lru.pop_back();
     }
 };
 
