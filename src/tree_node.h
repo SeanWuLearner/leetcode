@@ -53,6 +53,16 @@ struct TreeNode {
             //cout << endl;
         }
     }
+    ~TreeNode(){
+        deinitHelper(this->left);
+        deinitHelper(this->right);
+    }
+    void deinitHelper(TreeNode *node){
+        if(node == nullptr) return;
+        deinitHelper(node->left);
+        deinitHelper(node->right);
+        delete node;
+    }
     void draw (){
         string str;
         drawHelper(str, "", "");
