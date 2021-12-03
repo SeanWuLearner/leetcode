@@ -12,7 +12,7 @@ void dump_dict(unordered_map<string, vector<pair<string, double>>> graph){
 }
 
 /* DFS solution */
-class Solution {
+class Solution_dfs {
 public:
     unordered_map<string, vector<pair<string, double>>> graph;
 
@@ -63,6 +63,59 @@ public:
                 ans.push_back(-1);
         }
         return ans;
+    }
+};
+
+/* union find solution*/
+using RootMap = unordered_map<string, string>;
+using WeightMap = unordered_map<string, double>;
+class Solution {
+private:
+    RootMap root;
+    WeightMap weight;
+public:
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values,
+                                vector<vector<string>>& queries) {
+        for(int i=0 ; i < equations.size(); i++)
+            _union(equations[i][0], equations[i][1], values[i]);
+        vector<double> ans;
+        for(auto&& q : queries){
+            // fix for geting unknown/unknown.
+            if(root.find(q[0])==root.end() || root.find(q[1])==root.end()){
+                ans.push_back(-1.0);
+                continue;
+            }
+            string r1 = find(q[0]);
+            string r2 = find(q[1]);
+            if(r1!=r2){
+                ans.push_back(-1.0);
+                continue;
+            }
+            ans.push_back(weight[q[0]] / weight[q[1]]);
+        }
+        return ans;
+    }
+    void _union(string& dividend, string& divisor, double& quotient){
+        string root_dividend = find(dividend);
+        string root_divisor = find(divisor);
+        root[root_dividend] = root_divisor;
+        weight[root_dividend] = weight[divisor] * quotient / weight[dividend];
+    }
+
+    string find(string node){
+        //create new node here.
+        if(root.find(node) == root.end()){
+            root[node] = node;
+            weight[node] = 1.0;
+            return node;
+        }
+        //path compression
+        while(root[node] != node){
+            weight[node] *= weight[root[node]];
+            root[node] = root[root[node]];
+            node = root[node];
+        }
+        return node;
     }
 };
 
