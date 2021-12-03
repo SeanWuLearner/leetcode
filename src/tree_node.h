@@ -17,6 +17,10 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 
+    /* delete copy constructor and assignment operator */
+    TreeNode& operator=(const TreeNode&) = delete;
+    TreeNode(const TreeNode&) = delete;
+
     /* give v in level order traversal seq, where the INT_MIN element is equivalent
        to NULL.This is exact the same representation used in LeetCode. */
     TreeNode(const vector<int> v): left(NULL), right(NULL)
@@ -55,12 +59,16 @@ struct TreeNode {
     }
     ~TreeNode(){
         deinitHelper(this->left);
+        this->left = nullptr;
         deinitHelper(this->right);
+        this->right = nullptr;
     }
     void deinitHelper(TreeNode *node){
         if(node == nullptr) return;
         deinitHelper(node->left);
+        node->left = nullptr;
         deinitHelper(node->right);
+        node->right = nullptr;
         delete node;
     }
     void draw (){
