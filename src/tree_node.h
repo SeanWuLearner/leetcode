@@ -71,10 +71,10 @@ struct TreeNode {
         node->right = nullptr;
         delete node;
     }
-    void draw (){
+    string draw (){
         string str;
         drawHelper(str, "", "");
-        cout << str << endl;
+        return str;
     }
 private:
     void drawHelper(string& buf, string prefix, string child_prefix){
