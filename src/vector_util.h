@@ -14,4 +14,30 @@ void printVec(vector<vector<T>> v){
         printVec(i);
 }
 
+template<typename T>
+vector<T>& sortVec(vector<T>& v){
+    sort(v.begin(), v.end());
+    return v;
+}
+
+template<typename T>
+vector<T> sortVec(vector<T>&& v){
+    sortVec(v);
+    return v;
+}
+
+template<typename T>
+vector<vector<T>>& sortVec(vector<vector<T>>& v){
+    for(auto &&i : v )
+        sortVec(i);
+    sort(v.begin(), v.end());
+    return v;
+}
+
+template<typename T>
+vector<vector<T>> sortVec(vector<vector<T>>&& v){
+    sortVec(v);
+    return v;
+}
+
 #endif //VECTOR_UTIL_H
