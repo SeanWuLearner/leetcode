@@ -33,6 +33,15 @@ struct ListNode {
         }
         return (cur1==nullptr && cur2==nullptr);
     }
+    ListNode* find(int val){
+        ListNode *cur = this;
+        while(cur!=nullptr){
+            if(cur->val == val)
+                break;
+            cur = cur->next;
+        }
+        return cur;
+    }
 };
 
 ostream& operator<<(ostream& os, ListNode *node){
