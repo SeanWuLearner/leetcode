@@ -81,7 +81,7 @@ private:
         swap(val_freqs, r, pivot);
         pivot = r;
 
-        int insert_idx = 0;
+        int insert_idx = l;
         for(int i=0 ; i<r ; i++){
             if(val_freqs[pivot].second >= val_freqs[i].second){
                 swap(val_freqs, insert_idx++, i);
