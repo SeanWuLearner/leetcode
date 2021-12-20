@@ -71,13 +71,16 @@ struct TreeNode {
         node->right = nullptr;
         delete node;
     }
-    string draw (){
+    string draw () const{
         string str;
         drawHelper(str, "", "");
         return str;
     }
+    friend bool operator==(const TreeNode& l, const TreeNode& r){
+        return l.draw()==r.draw();
+    }
 private:
-    void drawHelper(string& buf, string prefix, string child_prefix){
+    void drawHelper(string& buf, string prefix, string child_prefix) const{
         buf += prefix;
         buf += to_string(val);
         buf += "\n";
