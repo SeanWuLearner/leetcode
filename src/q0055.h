@@ -114,7 +114,7 @@ TEST(Solution, Test1){
     exp = true;
     EXPECT_EQ(s.canJump(q), exp);
 
-    // q = {3,2,1,0,4};
-    // exp = false;
-    // EXPECT_EQ(s.canJump(q), exp);
+    q = {3,2,1,0,4};
+    exp = false;
+    EXPECT_EQ(s.canJump(q), exp);
 }
