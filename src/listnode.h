@@ -22,9 +22,9 @@ struct ListNode {
         return head.next;
     }
 
-    bool equals(ListNode* node) {
-        ListNode *cur1 = this;
-        ListNode *cur2 = node;
+    bool equals(ListNode const * node) const {
+        ListNode const *cur1 = this;
+        ListNode const *cur2 = node;
         while(cur1!=nullptr && cur2!=nullptr){
             if(cur1->val != cur2->val)
                 return false;
@@ -32,6 +32,9 @@ struct ListNode {
             cur2 = cur2->next;
         }
         return (cur1==nullptr && cur2==nullptr);
+    }
+    friend bool operator==(const ListNode &l, const ListNode &r){
+        return l.equals(&r);
     }
     ListNode* find(int val){
         ListNode *cur = this;
