@@ -79,6 +79,19 @@ struct TreeNode {
     friend bool operator==(const TreeNode& l, const TreeNode& r){
         return l.draw()==r.draw();
     }
+    TreeNode* find(int val){
+        if(this->val == val) return this;
+        TreeNode *ret;
+        if(this->left){
+            ret =this->left->find(val);
+            if(ret != nullptr) return ret;
+        }
+        if(this->right){
+            ret =this->right->find(val);
+            if(ret != nullptr) return ret;
+        }
+        return nullptr;
+    }
 private:
     void drawHelper(string& buf, string prefix, string child_prefix) const{
         buf += prefix;
