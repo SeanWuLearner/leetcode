@@ -1,6 +1,7 @@
 #include "tree_node.h"
 
-class Solution {
+/* Solution 1: recursive */
+class Solution1 {
 public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
         if(root==nullptr) return new TreeNode(val);
@@ -10,6 +11,23 @@ public:
         else
             root->left = insertIntoBST(root->left, val);
         return root;
+    }
+};
+
+/* Solution 2: iterative */
+class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if(root==nullptr) return new TreeNode(val);
+        TreeNode *cur = root;
+        while(true){
+            TreeNode **next = (val > cur->val)? &cur->right : &cur->left;
+            if(*next == nullptr){
+                *next = new TreeNode(val);
+                return root;
+            }
+            cur = *next;
+        }
     }
 };
 
