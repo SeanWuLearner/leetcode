@@ -1,6 +1,7 @@
 #include <unordered_set>
 
-class Solution {
+/*Solution1: hashset the acc*/
+class Solution1 {
 public:
     int subarraySum(vector<int>& nums, int k) {
         unordered_multiset<int> memo;
@@ -10,6 +11,23 @@ public:
             acc += i;
             ans += memo.count(acc - k);
             memo.insert(acc);
+        }
+        return ans;
+    }
+};
+
+/*Solution 2: use hashmap, <acc, freq> instead of unordered_multiset*/
+#include <unordered_map>
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int,int> memo;
+        memo[0] = 1;
+        int acc = 0, ans = 0;
+        for(auto i : nums){
+            acc += i;
+            ans += memo[acc - k];
+            memo[acc]++;
         }
         return ans;
     }
