@@ -1,6 +1,6 @@
 #include "listnode.h"
 
-/* Solution1: Priority Queue */
+/* Solution1: Priority Queue using multimap */
 class Solution_PQ {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
@@ -26,6 +26,41 @@ public:
         return head.next;
     }
 };
+
+/*Solution 1-2: priority queue*/
+#include <queue>
+class Solution{
+public:
+    static bool cmp(ListNode *a, ListNode *b){
+        return a->val > b->val;
+    }
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*,
+                       vector<ListNode*>,
+                       function<bool(ListNode*, ListNode*)>> pq(cmp);
+        int nil_cnt=0;
+        for(auto&& list : lists){
+            if(list==nullptr){
+                nil_cnt++;
+                continue;
+            }
+            pq.push(list);
+        }
+
+        ListNode ans, *cur=&ans;
+        while(nil_cnt < lists.size()){
+            ListNode *top = pq.top(); pq.pop();
+            cur->next = top;
+            cur = cur->next;
+            if(cur->next == nullptr)
+                nil_cnt++;
+            else
+                pq.push(cur->next);
+        }
+        return ans.next;
+    }
+};
+
 /* Solution2: Divide and conquer */
 /*
     (l0, l1), (l2, l3), (l4, l5), l6
@@ -33,7 +68,7 @@ public:
      l0                  l4
      l0
 */
-class Solution {
+class Solution_divideAndConquer {
 private:
     ListNode* merge2Lists(ListNode* l1, ListNode* l2){
         ListNode head;
