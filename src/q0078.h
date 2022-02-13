@@ -25,7 +25,7 @@ public:
 };
 
 /* Solution2: cascade */
-class Solution{
+class Solution_cascade{
 private:
     vector<vector<int>> ans;
 public:
@@ -37,6 +37,24 @@ public:
                 ans.push_back(ans[j]);
                 ans.back().push_back(nums[i]);
             }
+        }
+        return ans;
+    }
+};
+
+/* Solution 3: lexicographic : bitmap*/
+class Solution{
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+        int n = 1 << nums.size();
+        for(int i=0 ; i<n ; i++){
+            vector<int> tmp;
+            for(int j=0 ; j<nums.size() ; j++){
+                if(i & (0x1<<j))
+                    tmp.push_back(nums[j]);
+            }
+            ans.push_back(tmp);
         }
         return ans;
     }
