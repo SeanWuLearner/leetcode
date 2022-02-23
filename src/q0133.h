@@ -17,8 +17,9 @@ public:
     }
 };
 
+/*Solution 1: DFS*/
 #include <unordered_map>
-class Solution {
+class Solution1 {
 private:
     unordered_map<Node*, Node*> dict; //old->new
 public:
@@ -33,5 +34,33 @@ public:
             clone->neighbors.push_back(cloneGraph(neighbor));
         }
         return dict[node];
+    }
+};
+
+/*Solution 2: BFS*/
+#include <queue>
+class Solution {
+private:
+    Node* addr_dict[101] = {0};
+public:
+    Node* cloneGraph(Node* node) {
+        if(node==nullptr)
+            return nullptr;
+        queue<Node*> q;
+        Node *ret = new Node(node->val);
+        addr_dict[node->val] = ret;
+        q.push(node);
+
+        while(!q.empty()){
+            Node *cur = q.front();  q.pop();
+            for(auto &&n : cur->neighbors){
+                if(addr_dict[n->val]==0){
+                    addr_dict[n->val] = new Node(n->val);
+                    q.push(n);
+                }
+                addr_dict[cur->val]->neighbors.push_back(addr_dict[n->val]);
+            }
+        }
+        return ret;
     }
 };
